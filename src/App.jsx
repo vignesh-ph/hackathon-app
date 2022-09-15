@@ -1,14 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import './App.css';
+import ABForm from './components/ABForm';
 
 function App() {
-
   return (
     <div className="App">
-      <h1>Split test</h1>
+      <ABForm />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
