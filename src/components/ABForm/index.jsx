@@ -124,7 +124,7 @@ export default function App() {
                   labelId="deployment-zone-label"
                   value={value}
                   onChange={onChange}
-                  multiple
+                  
                   input={<OutlinedInput label="Name" />}
                   MenuProps={MenuProps}
                   className="inputField"
@@ -150,7 +150,7 @@ export default function App() {
                   labelId="splits-label"
                   value={value}
                   onChange={onChange}
-                  multiple
+                  
                   input={<OutlinedInput label="Splits" />}
                   MenuProps={MenuProps}
                   className="inputField"
@@ -175,7 +175,7 @@ export default function App() {
                 <Select
                   value={value}
                   onChange={onChange}
-                  multiple
+                  
                   MenuProps={MenuProps}
                   label="Implementations"
                   className="inputField"
