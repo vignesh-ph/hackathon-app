@@ -1,4 +1,4 @@
-import {  Button,Box  } from '@mui/material'
+import {  Button,Box, Chip  } from '@mui/material'
 import Typography from '@mui/material/Typography';
 import {
     
@@ -12,7 +12,10 @@ const Navbar = () => {
         
         }}>
         <Typography  onClick={() => navigate("/")} sx={{ cursor:'pointer'}} variant='h5' color={'white'}>Bazaarvoice Experiments</Typography>
-      
+        <div style={{margin: 0, padding: 0}}>
+            <Chip size='small' label="client" sx={{color: 'white', mr: 1}} variant="outlined" />
+            <span style={{fontSize: '20px', padding: 0, color: 'white'}}>testcustomer-fast-prs</span>
+        </div>
         </Box>
     </Box>
 };
