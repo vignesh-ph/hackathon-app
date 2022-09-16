@@ -10,8 +10,6 @@
     "web-server": "npm run lib/service/web.js --NODE_PATH=lib/service"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@hookform/resolvers": "^2.9.8",
@@ -19,8 +17,12 @@
     "@mui/x-date-pickers": "^5.0.1",
     "dayjs": "^1.11.5",
     "moment": "^2.29.4",
+    "react": "^18.2.0",
     "react-datepicker": "^4.8.0",
+    "react-dom": "^18.2.0",
+    "react-heatmap-grid": "^0.9.0",
     "react-hook-form": "^7.35.0",
+    "react-router-dom": "^6.4.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
