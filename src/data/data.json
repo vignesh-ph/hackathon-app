@@ -1,0 +1,45 @@
+[{
+    "hypothesis":"Sorting most helpful answers in questions drives more conversion",
+    "changes": ["Most helpful answers is made as default option"],
+    "deploymentZone":"Main Site",
+    "implementations": {
+            "test1": 0.5,
+            "test2": 0.5
+        },
+    "startDate":"",
+    "endDate":""
+},
+{
+    "hypothesis":"Infinite Scrolling leads to most number of views per answer",
+    "deploymentZone":"Main Site",
+    "changes": ["Most helpful answers is made as default option"],
+    "implementations": {
+            "test1": 0.5,
+            "test2": 0.5
+        },
+    "startDate":"",
+    "endDate":""
+},
+{
+    "hypothesis":"Sorting most helpful answers in questions drives more conversion",
+    "changes": ["Most helpful answers is made as default option","Most helpful answers is made as default option"],
+    "deploymentZone":"Main Site",
+    "implementations": {
+            "test1": 0.5,
+            "test2": 0.5
+        },
+    "startDate":"",
+    "endDate":""
+},
+{
+    "hypothesis":"Infinite Scrolling leads to most number of views per answer",
+    "deploymentZone":"Main Site",
+    "changes": ["Most helpful answers is made as default option"],
+    "implementations": {
+            "test1": 0.5,
+            "test2": 0.5
+        },
+    "startDate":"",
+    "endDate":""
+}
+]
