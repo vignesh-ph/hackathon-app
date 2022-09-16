@@ -1,3 +1,6 @@
+.abFormContainer {
+   text-align: center;
+}
 .input {
     display: block;
     box-sizing: border-box;

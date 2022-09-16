@@ -11,7 +11,7 @@ export default function() {
         <Card sx={{ boxShadow: 2 }}>
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    CLIENT
+                    Client
                 </Typography>
                 <Typography variant="h5" sx={{ mb: 2.5 }} component="div" color='primary'>
                     testcustomer-fast-prs
