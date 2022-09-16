@@ -1,6 +1,7 @@
 import './App.css';
 import ABForm from './components/ABForm';
 import Map from './components/HeatMap';
+import Dashboard from './components/Dashboard';
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,7 +17,7 @@ function App() {
         {/* <Link to="/analytics">Analytics</Link> */}
         <Link to="/analytics">Analytics</Link>
         <Routes>
-          <Route path='/' element={<ABForm/>}></Route>
+          <Route path='/' element={<Dashboard/>}></Route>
           <Route path='/analytics' element={<Map/>} />
         </Routes>
       </div>

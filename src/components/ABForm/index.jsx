@@ -1,34 +1,37 @@
-import React from "react";
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import {React, useState} from "react";
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Select from '@mui/material/Select';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import dayjs from 'dayjs';
+import moment from "moment";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-import "./style.css"
-
-const schema = yup.object({
-  start: yup.date().required(),
-  duration: yup.number().positive().integer().required(),
-  client: yup.string().required(),
-  deploymentZones: yup.array().of(yup.string()),
-  splits: yup.array().of(yup.string()),
-  implementations: yup.array().of(yup.string())
-}).required();
+import "./style.css";
 
 export default function App() {
-  const { register, handleSubmit, formState:{ errors }, control } = useForm({
-    resolver: yupResolver(schema)
+  const onSubmit = (e) => {
+    e.preventDefault();
+    let finalData = {...formData};
+    finalData.duration = moment(formData.end) - moment(formData.start)
+
+    console.log('final Data : ', finalData);
+  }
+
+  const [formData, setFormData] = useState({
+    start: "",
+    end: "",
+    client: "",
+    deploymentZones: [],
+    splits: [],
+    implementation1: "",
+    implementation2: ""
   });
-  const onSubmit = data => console.log(data);
 
   const deploymentZoneItems = [
     {
@@ -38,17 +41,6 @@ export default function App() {
     {
       name: 'Deployment 2',
       value: 'depl2'
-    }
-  ]
-
-  const splitItems = [
-    {
-      name: 'QA PILOT',
-      value: 'QA_PILOT'
-    },
-    {
-      name: 'QA LEGACY',
-      value: 'QA_LEGACY'
     }
   ]
 
@@ -74,130 +66,114 @@ export default function App() {
     },
   };
 
+  const onChange = (fieldValue, fieldKey) => {
+    console.log('e: ', fieldValue);
+    setFormData({...formData, [fieldKey]: fieldValue})
+  }
+
   return (
-    <Container fluid>
-        <Box style={{padding: "20px"}}  sx={{ bgcolor: '#FAFAFA',height: '100vh' }}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Controller
-              control={control}
-              name="start"
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                
-                <DesktopDatePicker
-                  label="Start"
-                  inputFormat="MM/DD/YYYY"
-                  value={value}
-                  onChange={onChange}
+    <Container fluid="true">
+        <Box style={{padding: "20px"}}  sx={{ bgcolor: '#FAFAFA',height: '100vh', flexGrow: 1  }}>
+          <form onSubmit={onSubmit}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <InputLabel id="start-label">Start</InputLabel>
+                <DateTimePicker
+                  labelId="start-label"
+                  value={formData.start}
+                  onChange={(e) => onChange(moment(e).format(), 'start')}
                   renderInput={(params) => <TextField {...params} />}
                   className="inputField"
-                  />
-                  )}
-            />
-            <p>{errors.start?.message}</p>
-
-            <Controller
-              control={control}
-              name="duration"
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <TextField className="inputField" label="Duration" variant="outlined" onChange={onChange} />
-              )}
-            />
-            <p>{errors.duration?.message}</p>
-
-            <Controller
-              control={control}
-              name="client"
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <TextField className="inputField" label="Client" variant="outlined" onChange={onChange} />
-              )}
-            />
-            <p>{errors.client?.message}</p>
-
-            {/* <input placeholder="Deployment Zones" {...register("deploymentZones")} /> */}
-            <InputLabel id="deployment-zone-label">Deployment Zones</InputLabel>
-            <Controller
-              control={control}
-              name="deploymentZones"
-              render={({ field: { onChange, onBlur, value = [], ref } }) => (
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <InputLabel id="end-label">End</InputLabel>
+                <DateTimePicker
+                  labelId="end-label"
+                  value={formData.end}
+                  minDateTime={dayjs(formData.start)}
+                  onChange={(e) => onChange(moment(e).format(), 'end')}
+                  renderInput={(params) => <TextField {...params} />}
+                  className="inputField"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <InputLabel id="client-label">End</InputLabel>
+                <TextField 
+                  className="inputField" 
+                  labelId="client-label"
+                  variant="outlined" 
+                  onChange={(e) => onChange(e.target.value, 'client')} 
+                  value={formData.client}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <InputLabel id="deployment-zone-label">Deployment Zones</InputLabel>
                 <Select
                   labelId="deployment-zone-label"
-                  value={value}
-                  onChange={onChange}
+                  value={formData.deploymentZones}
+                  onChange={(e) => onChange(e.target.value, 'deploymentZones')}
                   multiple
-                  input={<OutlinedInput label="Name" />}
                   MenuProps={MenuProps}
                   className="inputField"
                 >
-                {deploymentZoneItems.map((item) => (
-                  <MenuItem
-                    key={item.name}
-                    value={item.value}
-                  >
-                    {item.name}
-                  </MenuItem>
-                ))}
-              </Select>
-              )}
-            />
-            <p>{errors.deploymentZones?.message}</p>
-            <InputLabel id="splits-label">Splits</InputLabel>
-            <Controller
-              control={control}
-              name="splits"
-              render={({ field: { onChange, onBlur, value = [], ref } }) => (
+                  {deploymentZoneItems.map((item) => (
+                    <MenuItem
+                      key={item.name}
+                      value={item.value}
+                    >
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+              <Grid item xs={6}>
+                <InputLabel id="implementation1-label">Implementation 1</InputLabel>
                 <Select
-                  labelId="splits-label"
-                  value={value}
-                  onChange={onChange}
-                  multiple
-                  input={<OutlinedInput label="Splits" />}
+                  labelId="implementation1-label"
+                  value={formData.implementation1}
+                  onChange={(e) => onChange(e.target.value, 'implementation1')}
                   MenuProps={MenuProps}
                   className="inputField"
                 >
-                {splitItems.map((item) => (
-                  <MenuItem
-                    key={item.name}
-                    value={item.value}
-                  >
-                    {item.name}
-                  </MenuItem>
-                ))}
-              </Select>
-              )}
-            />
-            <p>{errors.splits?.message}</p>
-            <InputLabel id="implementations-label">Implementations</InputLabel>
-            <Controller
-              control={control}
-              name="implementations"
-              render={({ field: { onChange, onBlur, value = [], ref } }) => (
+                  {implementationItems.map((item) => (
+                    <MenuItem
+                      key={item.name}
+                      value={item.value}
+                    >
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+              <Grid item xs={6}>
+                <InputLabel id="implementation2-label">Implementation 2</InputLabel>
                 <Select
-                  value={value}
-                  onChange={onChange}
-                  multiple
+
+                  value={formData.implementation2}
+                  onChange={(e) => onChange(e.target.value, 'implementation2')}
                   MenuProps={MenuProps}
-                  label="Implementations"
+                  labelId="implementation2-label"
                   className="inputField"
                 >
-                {implementationItems.map((item) => (
-                  <MenuItem
-                    key={item.name}
-                    value={item.value}
-                  >
-                    {item.name}
-                  </MenuItem>
-                ))}
-              </Select>
-              )}
-            />
-            <p>{errors.implementations?.message}</p>
-            
-            <Button variant="contained" type="submit">SUBMIT</Button>
-          </LocalizationProvider>
+                  {implementationItems.map((item) => (
+                    <MenuItem
+                      key={item.name}
+                      value={item.value}
+                    >
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </Select> 
+              </Grid>
+              <Grid item xs={12}>
+                <Button variant="contained" type="submit">SUBMIT</Button>
+              </Grid>
+            </Grid>
+            </LocalizationProvider>
           </form>
         </Box>
       </Container>
-    
   );
 }
